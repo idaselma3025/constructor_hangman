@@ -8,11 +8,11 @@ var guesses;
 var randomWord;
 var currentWord;
 var guessedLtr;
+var indent; 
+var offset;
 
 function hangman(){
-  
-  process.stdout.write('\033c');  // clear output from this application/prevent scrolling
-  // console.log(randomWord[0]);
+
   console.log('***************************');
   console.log('*         HANGMAN         *');
   if (guesses < 10){
@@ -22,8 +22,14 @@ function hangman(){
     console.log('*     guesses left: ' + guesses + "    *");
   };
   console.log('***************************');
+  
   // display random word with unguessed letters represented by '_'
-  console.log(currentWord.toString()+'\n');
+  console.log(indent + currentWord.toString()+'\n');
+  // display letter already guessed 
+  if (guessedLtr.length > 0){
+    console.log('already guessed: ' + guessedLtr + '\n');
+  };
+  // get user input
   inquirer
     .prompt([{
       name:'letter',
@@ -34,21 +40,18 @@ function hangman(){
       if (currentWord.validGuess(input.letter)){
         currentWord.checkGuess(input.letter)
         guesses--;
-      }
-      else {        
-        console.log('You have already used ' + input.letter + ".");
-        setTimeout(function(){console.log('\nGuess again.')
-        }, 3000);
+        guessedLtr.push(input.letter);
+      // clear output from this application/prevent scrolling
+        process.stdout.write('\033c');  
       };
   
-
       if (currentWord.areWeDoneYet() === true){
         process.stdout.write('\033c');
         console.log('***************************');
         console.log('*         HANGMAN         *');
         console.log('*         You win!        *');
         console.log('***************************');
-        console.log(currentWord.toString().trim() +'\n');
+        console.log(indent + currentWord.toString().trim() +'\n');
         // playAgain();
         return;
       }
@@ -59,7 +62,7 @@ function hangman(){
         console.log('*         HANGMAN         *');
         console.log('*     No more guesses     *');
         console.log('***************************');
-        console.log("The word was '" + randomWord[0] + "'");
+        console.log("   The word was '" + randomWord[0] + "'");
         return;
       };
 
@@ -75,27 +78,13 @@ function init(){
   /* the random-words module returns an array. */
   randomWord = randomWords({exactly: 1, minLength: 6, maxLength: 12});
   currentWord = new Word(randomWord[0]);
+  offset = 13 - randomWord[0].length;
+  indent = "";
+  for (i=0; i<offset; i++){
+    indent += " ";
+  };
   // initial call to hangman
   hangman();
-}
-
-// does nothing right now.  Will not display.  code seems to skip past it
-function playAgain(){
-  inquirer
-  .prompt([{
-    name: 'play',
-    type: 'list',
-    message: 'Play again?',
-    choices: ['Yes', 'Quit']
-  }])
-  .then(function(answer){
-    if (answer === 'Yes'){
-      hangman();
-    }
-    else {
-      return;
-    }
-  });
 }
 
 init();

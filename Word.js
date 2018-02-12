@@ -36,7 +36,7 @@ var Word = function(word){
   // validate the guessed letter before using it
   this.validGuess = function(guessLtr){
     if (this.guessArr.indexOf(guessLtr) === -1){
-      console.log('pushing');
+      // console.log('pushing');
       this.guessArr.push(guessLtr);
       console.log('Guessed letters: ' + this.guessArr);
       return true;
