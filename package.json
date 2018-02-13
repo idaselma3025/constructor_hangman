@@ -9,6 +9,7 @@
   "author": "Craig Christensen",
   "license": "ISC",
   "dependencies": {
+    "colors": "^1.1.2",
     "inquirer": "^5.1.0",
     "random-words": "^1.0.0"
   }
