@@ -12,7 +12,7 @@ var Word = function(word){
 
   /* loop through the letters of current word and create a Letter object for each.  Push these object onto the lettArr array.*/
   for (i=0; i<word.length; i++){
-    this.letter = new Letter(word.charAt(i))
+    this.letter = new Letter(word.charAt(i));
     this.lettArr.push(this.letter);
   };
 
@@ -53,6 +53,10 @@ var Word = function(word){
       };
     };
     return true;  // done
+  };
+
+  this.showGuesses = function(){
+    return this.guessArr;
   };
 
 }

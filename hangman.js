@@ -1,3 +1,5 @@
+
+
 var inquirer = require('inquirer');
 var randomWords = require("random-words");
 var colors = require('colors');
@@ -7,7 +9,7 @@ var Word = require('./Word.js');
 var guesses;      // number of guesses remaining
 var randomWord;   /* holds the array returned by the randomWords module.  it will be an array with one element so randomWord[0] */
 var currentWord;  // holds the string value from randomWord[0]
-var guessedLtrs;  // an array that holds all of the user guesses.  used for display, not validation
+// var guessedLtrs;  // an array that holds all of the user guesses.  used for display, not validation
 var indent;       // these two variables are used in formatting the display
 var offset;
 
@@ -18,7 +20,8 @@ function hangman(){
   // display random word with unguessed letters represented by '_'
   console.log(colors.yellow(indent + currentWord.toString()+'\n'));
   // display letter already guessed 
-  console.log(colors.magenta('     ALREADY GUESSED: ' + colors.magenta(guessedLtrs) + '\n'));
+  // console.log(colors.magenta('     ALREADY GUESSED: ' + colors.magenta(guessedLtrs) + '\n'));
+  console.log(colors.magenta('     ALREADY GUESSED: ' + colors.magenta(currentWord.showGuesses()) + '\n'));
 
   // get user input (a letter)
   inquirer
@@ -39,11 +42,11 @@ function hangman(){
       }
     }])
     .then(function(input){
-      input.letter = input.letter.toLowerCase();
+      input.letter = input.letter.toLowerCase();  // random-words only returns lowercase
       if (currentWord.validGuess(input.letter)){  // if this letter has not already been tried
         currentWord.checkGuess(input.letter)  // see if it matches any of the letters in the current word
         guesses--;  // decrement the number of guesses left
-        guessedLtrs.push(input.letter);  // add this letter to the array of guessed letters
+        // guessedLtrs.push(input.letter);  // add this letter to the array of guessed letters
         clearScreen(); // clear the screen to make it ready to display main, win or lose screen
       };
       // Win?
