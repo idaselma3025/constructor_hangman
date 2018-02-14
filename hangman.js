@@ -25,9 +25,21 @@ function hangman(){
     .prompt([{
       name:'letter',
       type:'input',
-      message:'   Enter a letter'.cyan
+      message:'   Enter a letter'.cyan,
+      validate: function(value) {
+        var pass = value.match(
+          /^[a-zA-Z]?$/i
+        );
+        if (pass) {
+          return true;
+        }
+        else {
+          return 'Please enter a letter';
+        }
+      }
     }])
     .then(function(input){
+      input.letter = input.letter.toLowerCase();
       if (currentWord.validGuess(input.letter)){  // if this letter has not already been tried
         currentWord.checkGuess(input.letter)  // see if it matches any of the letters in the current word
         guesses--;  // decrement the number of guesses left
