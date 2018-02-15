@@ -6,25 +6,25 @@ var Letter = function(letter){
   this.letter = letter;
   this.visible = false;
 
-  /* The method compareChar takes a single letter string as input.  It compares it to the value ofletter.  If they are the same - if the user guessed correctly - then visible is set to true.
-  */
-  this.compareChar = function(ltr){
-    if (ltr === this.letter){
-      this.visible = true;
-    };
-  };
-
-  /* The method returnChar uses the 'visible' boolean value to determine whether to return the letter value or an underscore character. 
-  */
-  this.displayChar = function(){
-    if (this.visible) {
-      return this.letter;
-    } 
-    else {
-      return '_';
-    };
-  };
-
 };
+
+/* The method compareChar takes a single letter string as input.  It compares it to the value ofletter.  If they are the same - if the user guessed correctly - then visible is set to true.
+*/
+Letter.prototype.compareChar = function(ltr){
+  if (ltr === this.letter){
+    this.visible = true;
+  };
+}
+
+/* The method returnChar uses the 'visible' boolean value to determine whether to return the letter value or an underscore character. 
+*/
+Letter.prototype.displayChar = function(){
+  if (this.visible) {
+    return this.letter;
+  } 
+  else {
+    return '_';
+  };
+}
 
 module.exports = Letter;
