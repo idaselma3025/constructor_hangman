@@ -8,8 +8,7 @@ var Word = require('./Word.js');
 // GLOBALS
 var guesses;      // number of guesses remaining
 var randomWord;   /* holds the array returned by the randomWords module.  it will be an array with one element so randomWord[0] */
-var currentWord;  // holds the string value from randomWord[0]
-// var guessedLtrs;  // an array that holds all of the user guesses.  used for display, not validation
+var currentWord;  // a word object
 var indent;       // these two variables are used in formatting the display
 var offset;
 
@@ -20,7 +19,6 @@ function hangman(){
   // display random word with unguessed letters represented by '_'
   console.log(colors.yellow(indent + currentWord.toString()+'\n'));
   // display letter already guessed 
-  // console.log(colors.magenta('     ALREADY GUESSED: ' + colors.magenta(guessedLtrs) + '\n'));
   console.log(colors.magenta('     ALREADY GUESSED: ' + colors.magenta(currentWord.showGuesses()) + '\n'));
 
   // get user input (a letter)
@@ -46,19 +44,20 @@ function hangman(){
       if (currentWord.validGuess(input.letter)){  // if this letter has not already been tried
         currentWord.checkGuess(input.letter)  // see if it matches any of the letters in the current word
         guesses--;  // decrement the number of guesses left
-        // guessedLtrs.push(input.letter);  // add this letter to the array of guessed letters
         clearScreen(); // clear the screen to make it ready to display main, win or lose screen
       };
       // Win?
       if (currentWord.areWeDoneYet() === true){
         winScreen();
         console.log(colors.yellow(indent + currentWord.toString().trim() +'\n'));  // show the word
+        // init();
         return;  // end
       }
       // Lose?
       if (guesses < 1){
         loseScreen();
         console.log("       The word was '".red + colors.red(randomWord[0]) + "'".red);  // show the word
+        // init();
         return;  // end
       };
       // Continue
@@ -80,6 +79,25 @@ function init(){
     indent += " ";
   };
   // initial call to hangman
+
+  // this would be good to have but need to figure the problem with async
+  // inquirer
+  //   .prompt({
+  //     name:'stay_or_go',
+  //     type: 'list',
+  //     message: "Play Hangman?",
+  //     choices: ['PLAY','QUIT']
+
+  //   })
+  //   .then(function(answer){
+  //     if (answer.stay_or_go === 'PLAY'){
+  //       hangman();
+  //     }
+  //     else {
+  //       return;
+  //     }
+  //   })
+
   hangman();
 }
 
