@@ -15,50 +15,50 @@ var Word = function(word){
     this.letter = new Letter(word.charAt(i));
     this.lettArr.push(this.letter);
   };
+}
 
   /* make a string from the object in lettArr array.  call the Letter.returnChar method to get a letter or an underscore depending on whether the object's visible property is true or not. 
   */
-  this.toString = function(){
-    string = "";
-    for (i=0; i<this.lettArr.length; i++){
-      string = string + ' ' + this.lettArr[i].displayChar();
-    };
-    return string;
-  }
+ Word.prototype.toString = function(){
+  string = "";
+  for (i=0; i<this.lettArr.length; i++){
+    string = string + ' ' + this.lettArr[i].displayChar();
+  };
+  return string;
+}
 
-  // compare the guessed letter to the letters in the array.  
-  this.checkGuess = function(guessLtr){
-    for (i=0; i<this.lettArr.length; i++){
-      this.lettArr[i].compareChar(guessLtr);
-    }
+// compare the guessed letter to the letters in the array.  
+Word.prototype.checkGuess = function(guessLtr){
+  for (i=0; i<this.lettArr.length; i++){
+    this.lettArr[i].compareChar(guessLtr);
   }
+}
 
-  // validate the guessed letter before using it
-  this.validGuess = function(guessLtr){
-    if (this.guessArr.indexOf(guessLtr) === -1){;
-      this.guessArr.push(guessLtr);
-      return true;
-    }
-    else {
+// validate the guessed letter before using it
+Word.prototype.validGuess = function(guessLtr){
+  if (this.guessArr.indexOf(guessLtr) === -1){;
+    this.guessArr.push(guessLtr);
+    return true;
+  }
+  else {
+    return false;
+  };
+};
+
+/* loop through the lettArr array and check the 'visible' value for each object.  We have won if all are visible=true. if any are display=false, then we continue the game. 
+*/
+Word.prototype.areWeDoneYet = function(){
+  for (i=0; i<this.lettArr.length; i++){
+    if (this.lettArr[i].visible === false){ // not done
       return false;
     };
   };
+  return true;  // done
+};
 
-  /* loop through the lettArr array and check the 'visible' value for each object.  We have won if all are visible=true. if any are display=false, then we continue the game. 
-  */
-  this.areWeDoneYet = function(){
-    for (i=0; i<this.lettArr.length; i++){
-      if (this.lettArr[i].visible === false){ // not done
-        return false;
-      };
-    };
-    return true;  // done
-  };
-
-  this.showGuesses = function(){
-    return this.guessArr;
-  };
-
-}
+// returns the array of guessed letters
+Word.prototype.showGuesses = function(){
+  return this.guessArr;
+};
 
 module.exports = Word;
