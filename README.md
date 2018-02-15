@@ -5,20 +5,20 @@
 
 Enter `node hangman` from the command line to begin the game.
 
-![Hangman Main](./assets/images/main.jpg)
+![Hangman Main](./assets/images/main.JPG)
 
 Hangman will generate a new random word each time you play.  Enter a single letter to play.
 
 If you guess a letter correctly, the screen will show its place in the word.  Letter guesses are added to the list below the word.  The user is not allowed to enter a letter that has already been used.  The number of guesses left will decrease with each guess.
 
-![Hangman Mid](./assets/images/mid_game.jpg)
+![Hangman Mid](./assets/images/mid_game.JPG)
 
 You will either win...
 
-![Hangman Win](./assets/images/win.jpg)
+![Hangman Win](./assets/images/win.JPG)
 ... or lose.
 
-![Hangman Lose](./assets/images/lose.jpg)
+![Hangman Lose](./assets/images/lose.JPG)
 
 
 ### **How CLI Hangman was built**
