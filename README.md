@@ -52,7 +52,7 @@ The **Word** object has four methods.
 
 ## To Do
 
-* **Validation** - add validation to the enquirer prompt to ensure the user only gives it an alphabetic character.
+* ~~**Validation** - add validation to the enquirer prompt to ensure the user only gives it an alphabetic character.~~
 
 * **Play Again** - Allow the user to choose between playing another round or gracefully exiting to the command line.
 
