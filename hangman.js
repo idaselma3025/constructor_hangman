@@ -14,7 +14,7 @@ var offset;
 
 
 function hangman(){
-
+  clearScreen();
   mainScreen();
   // display random word with unguessed letters represented by '_'
   console.log(colors.yellow(indent + currentWord.toString()+'\n'));
@@ -23,51 +23,51 @@ function hangman(){
 
   // get user input (a letter)
   inquirer
-    .prompt([{
-      name:'letter',
-      type:'input',
-      message:'   Enter a letter'.cyan,
-      validate: function(value) {
-        var pass = value.match(
-          /^[a-zA-Z]?$/i
-        );
-        if (pass) {
-          return true;
-        }
-        else {
-          return 'Please enter a letter';
-        }
+  .prompt([{
+    name:'letter',
+    type:'input',
+    message:'   Enter a letter'.cyan,
+    validate: function(value) {
+      var pass = value.match(
+        /^[a-zA-Z]?$/i
+      );
+      if (pass) {
+        return true;
       }
-    }])
-    .then(function(input){
-      input.letter = input.letter.toLowerCase();  // random-words only returns lowercase
-      if (currentWord.validGuess(input.letter)){  // if this letter has not already been tried
-        currentWord.checkGuess(input.letter)  // see if it matches any of the letters in the current word
-        guesses--;  // decrement the number of guesses left
-        clearScreen(); // clear the screen to make it ready to display main, win or lose screen
-      };
-      // Win?
-      if (currentWord.areWeDoneYet() === true){
-        winScreen();
-        console.log(colors.yellow(indent + currentWord.toString().trim() +'\n'));  // show the word
-        // init();
-        return;  // end
+      else {
+        return 'Please enter a letter';
       }
-      // Lose?
-      if (guesses < 1){
-        loseScreen();
-        console.log("       The word was '".red + colors.red(randomWord[0]) + "'".red);  // show the word
-        // init();
-        return;  // end
-      };
-      // Continue
-      hangman();  // loop until game ends      
+    }
+  }])
+  .then(function(input){
+    input.letter = input.letter.toLowerCase();  // random-words only returns lowercase
+    if (currentWord.validGuess(input.letter)){  // if this letter has not already been tried
+      currentWord.checkGuess(input.letter);  // see if it matches any of the letters in the current word
+      guesses--;  // decrement the number of guesses left
+      clearScreen(); // clear the screen to make it ready to display main, win or lose screen
+    };
+    // Win?
+    if (currentWord.areWeDoneYet() === true){
+      winScreen();
+      console.log(colors.yellow(indent + currentWord.toString().trim() +'\n'));  // show the word
+      // init();
+      process.exit();// end
+    }
+    // Lose?
+    if (guesses < 1){
+      loseScreen();
+      console.log("       The word was '".red + colors.red(randomWord[0]) + "'".red);  // show the word
+      // init();
+      process.exit(); // end
+    };
+    // Continue
+    hangman();  // loop until game ends      
   });
 }
 
 /* this is broken out for use in 'play again' functionality.  If I ever get that to work, I will need to reset the game here */
 function init(){
-  clearScreen();  
+  // clearScreen();  
   guesses = 15;
   randomWord = [];
   guessedLtrs = [];
@@ -78,26 +78,29 @@ function init(){
   for (i=0; i<offset; i++){
     indent += " ";
   };
-  // initial call to hangman
-
+  
+  // console.log("INIT APP");
   // this would be good to have but need to figure the problem with async
+  // clearScreen();
   // inquirer
-  //   .prompt({
-  //     name:'stay_or_go',
-  //     type: 'list',
-  //     message: "Play Hangman?",
-  //     choices: ['PLAY','QUIT']
-
-  //   })
-  //   .then(function(answer){
-  //     if (answer.stay_or_go === 'PLAY'){
-  //       hangman();
-  //     }
-  //     else {
-  //       return;
-  //     }
-  //   })
-
+  // .prompt({
+  //   name:'stay_or_go',
+  //   type: 'list',
+  //   message: "Play Hangman?",
+  //   choices: ['PLAY','QUIT']
+  // })
+  // .then(function(answer){
+  //   // console.log(answer);
+  //   if (answer.stay_or_go === 'PLAY'){
+  //     clearScreen();
+  //     hangman();
+  //   }
+  //   else {
+  //     process.exit();
+  //   }
+  // });
+  
+  // initial call to hangman
   hangman();
 }
 
@@ -115,7 +118,7 @@ function mainScreen(){
 };
 
 function winScreen(){
-process.stdout.write('\033c');
+clearScreen();
 console.log('\n\n    ***************************'.rainbow);
 console.log('    *         '.rainbow + 'HANGMAN'.red + '         *'.rainbow);
 console.log('    *         '.rainbow + 'You Win!'.yellow + '        *'.rainbow);
@@ -123,7 +126,7 @@ console.log('    ***************************'.rainbow);
 };
 
 function loseScreen(){
-process.stdout.write('\033c');
+clearScreen();
 console.log('\n\n    ***************************'.rainbow);
 console.log('    *         '.rainbow + 'HANGMAN'.red + '         *'.rainbow);
 console.log('    *     '.rainbow + 'No more guesses'.red + '     *'.rainbow);

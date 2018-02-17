@@ -1,5 +1,5 @@
 /*****************************LETTER.JS********************************* 
-Letter is a constructor function that takes a letter as input and makes a Letter object from it.  The Boolean Letter.visible is a switch that is used to control wheter Letter.letter or a masking character '_' will be returned.
+Letter is a constructor function that takes a letter as input and makes a Letter object from it.  The Boolean Letter.visible is a switch that is used to control whether Letter.letter or a masking character '_' will be returned.
 */
 
 var Letter = function(letter){
